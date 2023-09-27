@@ -2,18 +2,27 @@ const express = require("express");
 //create a new app with express
 const app = express()
 //require the http module
+const userRouter = require("./routes/routes")
+
 const http = require("http").Server(app)
 //require the socket.io module
 const io = require("socket.io")
 const port = 500;
 const socket = io(http);
+app.use(express.json())
+
+
+
+app.get("/", (req, res)=>{
+    res.send("hello")
+})
 
 //Connect with the database
 const Chat = require("./model/chats");
 const connect = require("./db")
 const  router  =  express.Router();
 
-
+app.use('/chat', userRouter);
 //setup event listener
 socket.on("connection", (socket=>{
     console.log("user connected")
