@@ -1,9 +1,12 @@
 const express = require("express");
 //create a new app with express
 const app = express()
+
+const cors = require("cors")
 //require the http module
 const userRouter = require("./routes/routes")
 
+app.use(cors())
 const http = require("http").Server(app)
 //require the socket.io module
 const io = require("socket.io")
