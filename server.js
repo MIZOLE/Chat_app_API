@@ -9,6 +9,26 @@ const io = new Server(server);
 
 
 // //Connect with the database
+
+const cors = require("cors")
+//require the http module
+const userRouter = require("./routes/routes")
+
+app.use(cors())
+const http = require("http").Server(app)
+//require the socket.io module
+const io = require("socket.io")
+const port = 500;
+const socket = io(http);
+app.use(express.json())
+
+
+
+app.get("/", (req, res)=>{
+    res.send("hello")
+})
+
+//Connect with the database
 const Chat = require("./model/chats");
 const connect = require("./db");
 const { error } = require("console");
