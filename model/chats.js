@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const chatShema = new Schema(
     {
-        message: {
+        messages: {
         type: String
         },
         sender: {
@@ -16,6 +16,6 @@ const chatShema = new Schema(
     });
 
 
-let Chat = mongoose.model("Chat", chatShema);
+let Chat = mongoose.model("Messages", chatShema);
 
 module.exports= Chat;

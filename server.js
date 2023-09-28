@@ -1,46 +1,57 @@
 const express = require("express");
+const { createServer } = require('http'); // Corrected import for createServer
+const { join } = require('path'); // Corrected import for join
+const { Server } = require('socket.io');
 //create a new app with express
 const app = express()
-//require the http module
-const http = require("http").Server(app)
-//require the socket.io module
-const io = require("socket.io")
-const port = 500;
-const socket = io(http);
+const server = createServer(app);
+const io = new Server(server);
 
-//Connect with the database
+
+// //Connect with the database
 const Chat = require("./model/chats");
-const connect = require("./db")
-const  router  =  express.Router();
+const connect = require("./db");
+const { error } = require("console");
+const router = express.Router();
 
+app.get('/', (req, res) => {
+    res.sendFile(join(__dirname, "index.html"))
+})
 
-//setup event listener
-socket.on("connection", (socket=>{
-    console.log("user connected")
+//load a scoket io anc connect
+io.on('connection', (socket) => {
+    console.log('a user connected', socket.id);
 
-    socket.on("disconnect", ()=>{
-        console.log("Disconnected")
+    // Handle incoming chat messages
+    socket.on('chat message', async (msg) => {
+        console.log('Received message:', msg);
+        const newmsg = msg
+
+        // Save messages to MongoDB
+        try {
+            const message = new Chat({ user: newmsg});
+            console.log(message)
+            
+            const result = await message.save();
+            console.log(result);
+
+            // Broadcast the message to all connected clients
+            io.emit('chat message', msg);
+        } catch (err) {
+            console.error(err);
+        }
     });
 
-    socket.on("chat message", function(msg){
-    console.log("message" + msg);
-        //broadcast message to everyone in port 5000 except yourself
-    socket.broadcast.emit('recieved', {message: msg});
-
-    //save chat on mongoDB
-    connect.then(db => {
-        //create a new chat and store it
-        let chatMessage = new Chat({message: msg, sender: "Anonymous"});
-        chatMessage.save()
-    })
-})
-}))
+    // Listen to user disconnection
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 //wire up the server to listen to our port 500
-http.listen(port, ()=>{
-    console.log("connected to port:"+port)
-})
-
+server.listen(3000, () => {
+    console.log('server running at http://localhost:3000');
+});
 
 
 
