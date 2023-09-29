@@ -32,13 +32,24 @@ exports.signIn =(req,res) =>{
       id: user._id  ,
       username: user.username,
       image: user.image,
-      password:user.password,
       accesstoken:token 
     })
   })
  
   
     
+}
+
+exports.getAllUser = (req, res) =>{
+  
+  User.find()
+    .then(data=>{
+        res.status(200).send(data)
+    })
+    .catch(error=>{
+        res.status(500).send("Could not find book")
+        console.log("Could not find book,error")
+    })
 }
 
 // )
