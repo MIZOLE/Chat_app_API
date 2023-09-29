@@ -8,6 +8,10 @@ const io = require('socket.io')(http, {
 
 const cors = require("cors")
 app.use(cors())
+// const http = require("http").Server(app)
+//require the socket.io module
+const port = 3300;
+const socket = io(http);
 app.use(express.json())
 
 // app.use(express.static('public'))
@@ -45,8 +49,8 @@ io.on('connection', (socket) => {
 )
 
 //wire up the server to listen to our port 500
-http.listen(3000, () => {
-    console.log(`server running at port ${3000}`);
+http.listen(port, () => {
+    console.log(`server running at port ${port}`);
 });
 
 
@@ -54,9 +58,9 @@ http.listen(3000, () => {
 
 
 
-{/* <ul>
+/* <ul>
   <li *ngFor="let message of messageList">{{ message }}</li>
 </ul>
 
 <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
-<button (click)="sendMessage()">Send Message</button> */}
+<button (click)="sendMessage()">Send Message</button> *///
