@@ -7,21 +7,22 @@ const controller = require("../controlls/user.controller");
 const router = express.Router();
 
 
-router.route("/").get((req, res, next) =>{
+router.route("/get").get((req, res, next) =>{
     res.setHeader("Content-Type", "application/json");
-    res.statusCode = 200;
+    res.send('hello world')
 
-    connectdb.then(db => {
-        Chats.find({}).then(chat => {
-            res.json(chat)
-        })
-    })
 })
+
+
 
 router.route("/send").get((req,res)=>{
     res.send("hello world")
 })
 router.route("/signUp").post(controller.signUp)
 router.route("/signIn").post(controller.signIn)
+router.route("/getAllUser").get(controller.getAllUser)
+
+
+
 
 module.exports  =  router;

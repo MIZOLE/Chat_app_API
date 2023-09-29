@@ -10,7 +10,7 @@ app.use(cors())
 const http = require("http").Server(app)
 //require the socket.io module
 const io = require("socket.io")
-const port = 500;
+const port = 3300;
 const socket = io(http);
 app.use(express.json())
 
