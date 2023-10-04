@@ -1,5 +1,7 @@
 const express = require("express");
+const  Messages = require("./model/chats")
 const app = express()
+const chatRoutes = require("./routes/routes")
 const http = require('http').Server(app);
 //const { join } = require('path'); 
 const io = require('socket.io')(http, {
@@ -13,6 +15,7 @@ app.use(cors())
 const port = 3300;
 // const socket = io(http);
 app.use(express.json())
+app.use("/chat", chatRoutes)
 
 // app.use(express.static('public'))
 
@@ -33,17 +36,35 @@ const connect = require("./db");
 // })
 
 io.on('connection', (socket) => {
-
     var stored_messages = []
+//   console.log("a userconneted", socket.id)   
 
-    console.log('a user connected', socket.id);
+    socket.on('chat message',  async (msg) => {
+       
+        const message = JSON.parse(msg)
+        console.log("message", message)
+        const newmessage = new Messages({
+            users: message.user,
+            text : message.text,
+            to: message.to
+            
+          });
+          console.log("hddhdhdhdhd", msg)
+         await newmessage.save()
+          .then(data=>{
+            console.log(data)
+          }).catch(error=>{
+            console.log(console.log(error))
+          })
+            io.emit('chat message', `${msg}`)
 
-    socket.on('chat message', (msg) => {
-        console.log("message", msg)
-        io.emit('chat message', `${socket.id}  ${msg}`)
-        console.log(msg)
-        //    stored_messages.push(msg, socket.id)
-        //     console.log(stored_messages)
+         socket.on('disconnect', () => {
+         console.log('user disconnected');
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+          });
     })
 }
 )

@@ -40,16 +40,15 @@ exports.signIn =(req,res) =>{
     
 }
 
-exports.getAllUser = (req, res) =>{
-  
+exports.getAllUser = (req, res)=>{
+
   User.find()
-    .then(data=>{
-        res.status(200).send(data)
-    })
-    .catch(error=>{
-        res.status(500).send("Could not find book")
-        console.log("Could not find book,error")
-    })
+  .then(data=>{
+      res.status(200).send(data)
+  })
+  .catch(error=>{
+      res.status(500).send("Could not find book")
+      console.log("Could not find book,error")
+  })
 }
 
-// )
