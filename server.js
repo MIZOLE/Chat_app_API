@@ -41,21 +41,17 @@ io.on('connection', (socket) => {
 
     socket.on('chat message',  async (msg) => {
        
-        const message = JSON.parse(msg)
-        console.log("message", message)
+        const message = await JSON.parse(msg)
+        console.log(message)
         const newmessage = new Messages({
-            users: message.user,
+            user: message.user,
             text : message.text,
+            users:[message.user, message.to],
             to: message.to
             
           });
-          console.log("hddhdhdhdhd", msg)
-         await newmessage.save()
-          .then(data=>{
-            console.log(data)
-          }).catch(error=>{
-            console.log(console.log(error))
-          })
+          newmessage.save().then()
+          
             io.emit('chat message', `${msg}`)
 
          socket.on('disconnect', () => {

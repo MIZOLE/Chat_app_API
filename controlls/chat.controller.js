@@ -4,7 +4,7 @@ const addMessage = require("../model/chats")
 exports.addMessage = (req,res)=>{
     const { from , to, message} = req.body
     const newmessage = new addMessage({
-        messages:message,
+        text:message,
         users:[from,to],
         sender:from
       });

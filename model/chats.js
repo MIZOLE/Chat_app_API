@@ -4,12 +4,10 @@ const Schema = mongoose.Schema;
 
 const chatShema = new Schema(
     {
-        users:{type: String},  
+        sender:{type: String},  
         text: {type: String },  
-        to:{type:String}
-        // tousers:Array
+        users:Array,
 
-    
         
         },
             {

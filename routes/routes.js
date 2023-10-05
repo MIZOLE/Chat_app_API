@@ -28,6 +28,6 @@ router.route("/getAllUser").get(controller.getAllUser)
 //chatRoutes
 router.route("/send").post(chatController.addMessage)
 router.route("/getMessage").get(chatController.getMessage)
-
+// router.get('/',(req ,res))
 
 module.exports  =  router;
