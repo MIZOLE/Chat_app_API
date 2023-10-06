@@ -4,18 +4,17 @@ const Schema = mongoose.Schema;
 
 const chatShema = new Schema(
     {
-        message: {
-        type: String
-        },
-        sender: {
-        type: String
-            }
+        sender:{type: String},  
+        text: {type: String },  
+        users:Array,
+
+        
         },
             {
         timestamps: true
     });
 
 
-let Chat = mongoose.model("Chat", chatShema);
+let Chat = mongoose.model("Messages", chatShema);
 
 module.exports= Chat;
