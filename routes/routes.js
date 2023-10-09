@@ -28,6 +28,8 @@ router.route("/getAllUser").get(controller.getAllUser)
 //chatRoutes
 router.route("/send").post(chatController.addMessage)
 router.route("/getMessage").get(chatController.getMessage)
-// router.get('/',(req ,res))
+router.delete('/delete/:id', chatController.deleteOne)
+router.get('/getAllMessage', chatController.getAllMessage)
+
 
 module.exports  =  router;
