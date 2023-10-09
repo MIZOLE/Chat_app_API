@@ -22,6 +22,9 @@ router.route("/get").get((req, res, next) =>{
 router.route("/signUp").post(controller.signUp)
 router.route("/signIn").post(controller.signIn)
 router.route("/getAllUser").get(controller.getAllUser)
+router.route("/getSearch").get(controller.findAll)
+
+
 
 
 
@@ -29,7 +32,7 @@ router.route("/getAllUser").get(controller.getAllUser)
 router.route("/send").post(chatController.addMessage)
 router.route("/getMessage").get(chatController.getMessage)
 router.delete('/delete/:id', chatController.deleteOne)
-router.get('/getAllMessage', chatController.getAllMessage)
+
 
 
 module.exports  =  router;

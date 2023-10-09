@@ -41,7 +41,6 @@ exports.signIn =(req,res) =>{
 }
 
 exports.getAllUser = (req, res)=>{
-
   User.find()
   .then(data=>{
       res.status(200).send(data)
@@ -52,3 +51,15 @@ exports.getAllUser = (req, res)=>{
   })
 }
 
+exports.findAll = (req, res) => {
+    const username = req.body.username
+    User.find({username})
+    .then(data=>{
+        res.status(200).send(data)
+    })
+    .catch(error=>{
+        res.status(500).send("Could not find User")
+        console.log("Could not find book,error")
+    })
+
+};
