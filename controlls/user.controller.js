@@ -52,7 +52,7 @@ exports.getAllUser = (req, res)=>{
 }
 
 exports.findAll = (req, res) => {
-    const username = req.body.username
+    const username = req.body 
     User.find({username})
     .then(data=>{
         res.status(200).send(data)
@@ -61,5 +61,26 @@ exports.findAll = (req, res) => {
         res.status(500).send("Could not find User")
         console.log("Could not find book,error")
     })
+
+};
+
+
+exports.update = (req, res) =>{
+  const id = req.params.id;
+  User.findByIdAndUpdate(id, req.body , { useFindAndModify: true})
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update user with id=${id}. Maybe user was not created!`
+        });
+      } else res.send({ message: "User was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating the user account with id=" + id
+      });
+  });
+
+
 
 };
