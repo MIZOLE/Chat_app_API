@@ -23,7 +23,7 @@ router.route("/signUp").post(controller.signUp)
 router.route("/signIn").post(controller.signIn)
 router.route("/getAllUser").get(controller.getAllUser)
 router.route("/getSearch").get(controller.findAll)
-router.route("/update/:id").post(controller.findAll)
+router.route("/updateUser/:id").put(controller.update)
 
 
 
