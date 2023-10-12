@@ -6,6 +6,8 @@ exports.signUp = (req,res)=>{
     const user = new User({
         username: req.body.username,
         image: req.body.image,
+        number:req.body.numbetr,
+        email:req.body.email,
         password: bcrypt.hashSync(req.body.password, 8),
       });
 
@@ -32,6 +34,8 @@ exports.signIn =(req,res) =>{
       id: user._id  ,
       username: user.username,
       image: user.image,
+      number:user.number,
+      email:user.email,
       accesstoken:token 
     })
   })
