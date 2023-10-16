@@ -52,7 +52,7 @@ exports.getAllUser = (req, res)=>{
 }
 
 exports.findAll = (req, res) => {
-    const username = req.body.username
+    const username = req.params.id
     User.find({username})
     .then(data=>{
         res.status(200).send(data)
