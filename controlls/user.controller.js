@@ -6,6 +6,8 @@ exports.signUp = (req,res)=>{
     const user = new User({
         username: req.body.username,
         image: req.body.image,
+        number:req.body.numbetr,
+        email:req.body.email,
         password: bcrypt.hashSync(req.body.password, 8),
       });
 
@@ -32,6 +34,8 @@ exports.signIn =(req,res) =>{
       id: user._id  ,
       username: user.username,
       image: user.image,
+      number:user.number,
+      email:user.email,
       accesstoken:token 
     })
   })
@@ -61,5 +65,26 @@ exports.findAll = (req, res) => {
         res.status(500).send("Could not find User")
         console.log("Could not find book,error")
     })
+
+};
+
+
+exports.update = (req, res) =>{
+  const id = req.params.id;
+  User.findByIdAndUpdate(id, req.body , { useFindAndModify: true})
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update user with id=${id}. Maybe user was not created!`
+        });
+      } else res.send({ message: "User was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating the user account with id=" + id
+      });
+  });
+
+
 
 };

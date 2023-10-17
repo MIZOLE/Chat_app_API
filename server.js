@@ -36,23 +36,13 @@ const connect = require("./db");
 // })
 
 io.on('connection', (socket) => {
-    var stored_messages = []
-//   console.log("a userconneted", socket.id)   
+  console.log("a userconneted", socket.id)   
 
     socket.on('chat message',  async (msg) => {
-       
-        const message = await JSON.parse(msg)
-        console.log(message)
-        const newmessage = new Messages({
-            user: message.user,
-            text : message.text,
-            users:[message.user, message.to],
-            to: message.to
-            
-          });
-          newmessage.save().then()
           
             io.emit('chat message', `${msg}`)
+            console.log(`message: ${msg}`)
+
 
          socket.on('disconnect', () => {
          console.log('user disconnected');
